@@ -1,0 +1,75 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{A1B2C3D4-E5F6-4A7B-8C9D-E0F1A2B3C4D5}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Web Search -->
+    <Projects Include="Tavily\01-DirectCall\TavilyDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Tavily\02-ChatTools\TavilyChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="BraveSearch\01-DirectCall\BraveSearchDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="BraveSearch\02-ChatTools\BraveSearchChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="SerpApi\01-DirectCall\SerpApiDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="SerpApi\02-ChatTools\SerpApiChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="Exa\01-DirectCall\ExaDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Exa\02-ChatTools\ExaChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="PerplexitySonar\01-DirectCall\PerplexityDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="PerplexitySonar\02-ChatTools\PerplexityChatTool.dproj"><Dependencies/></Projects>
+    <!-- Speech -->
+    <Projects Include="OpenAISpeech\01-DirectCall\OpenAISpeechDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="OpenAISpeech\02-ChatTools\OpenAISpeechChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="GeminiSpeech\01-DirectCall\GeminiSpeechDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="GeminiSpeech\02-ChatTools\GeminiSpeechChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="ClaudeSpeech\01-DirectCall\ClaudeSpeechDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="ClaudeSpeech\02-ChatTools\ClaudeSpeechChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="ElevenLabs\01-DirectCall\ElevenLabsDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="ElevenLabs\02-ChatTools\ElevenLabsChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="AssemblyAI\01-DirectCall\AssemblyAIDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="AssemblyAI\02-ChatTools\AssemblyAIChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="Deepgram\01-DirectCall\DeepgramDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Deepgram\02-ChatTools\DeepgramChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="Cartesia\01-DirectCall\CartesiaDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Cartesia\02-ChatTools\CartesiaChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="FishAudio\01-DirectCall\FishAudioDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="FishAudio\02-ChatTools\FishAudioChatTool.dproj"><Dependencies/></Projects>
+    <!-- Vision -->
+    <Projects Include="OpenAIVision\01-DirectCall\OpenAIVisionDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="OpenAIVision\02-ChatTools\OpenAIVisionChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="GeminiVision\01-DirectCall\GeminiVisionDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="GeminiVision\02-ChatTools\GeminiVisionChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="ClaudeVision\01-DirectCall\ClaudeVisionDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="ClaudeVision\02-ChatTools\ClaudeVisionChatTool.dproj"><Dependencies/></Projects>
+    <!-- Image Generation -->
+    <Projects Include="FalAi\01-DirectCall\FalAiDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="FalAi\02-ChatTools\FalAiChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="Ideogram\01-DirectCall\IdeogramDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Ideogram\02-ChatTools\IdeogramChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="Replicate\01-DirectCall\ReplicateDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Replicate\02-ChatTools\ReplicateChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="StabilityAI\01-DirectCall\StabilityAIDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="StabilityAI\02-ChatTools\StabilityAIChatTool.dproj"><Dependencies/></Projects>
+    <!-- Video Generation -->
+    <Projects Include="GeminiVideo\01-DirectCall\GeminiVideoDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="GeminiVideo\02-ChatTools\GeminiVideoChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="OpenAIVideo\01-DirectCall\OpenAIVideoDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="OpenAIVideo\02-ChatTools\OpenAIVideoChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="KlingAI\01-DirectCall\KlingAIDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="KlingAI\02-ChatTools\KlingAIChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="RunwayML\01-DirectCall\RunwayMLDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="RunwayML\02-ChatTools\RunwayMLChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="DID\01-DirectCall\DIDDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="DID\02-ChatTools\DIDChatTool.dproj"><Dependencies/></Projects>
+    <!-- PDF Parsing -->
+    <Projects Include="LlamaParse\01-DirectCall\LlamaParseDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="LlamaParse\02-ChatTools\LlamaParseChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="MistralOcr\01-DirectCall\MistralOcrDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="MistralOcr\02-ChatTools\MistralOcrChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="Reducto\01-DirectCall\ReductoDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Reducto\02-ChatTools\ReductoChatTool.dproj"><Dependencies/></Projects>
+    <Projects Include="Unstructured\01-DirectCall\UnstructuredDirect.dproj"><Dependencies/></Projects>
+    <Projects Include="Unstructured\02-ChatTools\UnstructuredChatTool.dproj"><Dependencies/></Projects>
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality.12</Borland.Personality>
+  </ProjectExtensions>
+  <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

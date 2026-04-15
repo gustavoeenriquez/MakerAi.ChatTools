@@ -1,0 +1,44 @@
+# Delphi compiled output
+*.dcu
+*.dcp
+*.bpl
+*.bpi
+*.exe
+*.dll
+*.map
+*.o
+*.a
+*.dylib
+*.so
+*.res
+*.rsm
+
+# Delphi IDE state
+*.local
+*.identcache
+*.stat
+*.dsk
+*.dof
+*.cfg
+*.~*
+*~.nfm
+__history/
+__recovery/
+
+# Output directories
+Win32/
+Win64/
+Linux64/
+Android/
+iOSDevice64/
+OSX64/
+
+# Delphi Package cache
+*.bdsgroup.local
+*.groupproj.local
+
+# User-specific project settings
+*.dproj.local
+
+# MSBuild output
+*.dproj.user

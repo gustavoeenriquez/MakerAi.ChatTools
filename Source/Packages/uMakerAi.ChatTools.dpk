@@ -1,0 +1,68 @@
+package uMakerAi.ChatTools;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'MakerAI ChatTools — Implementaciones de herramientas para TAiChatConnection'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  inet,
+  RESTComponents,
+  MakerAI;
+
+contains
+  uMakerAi.ChatTools.Tavily          in '..\Web\uMakerAi.ChatTools.Tavily.pas',
+  uMakerAi.ChatTools.BraveSearch     in '..\Web\uMakerAi.ChatTools.BraveSearch.pas',
+  uMakerAi.ChatTools.SerpApi         in '..\Web\uMakerAi.ChatTools.SerpApi.pas',
+  uMakerAi.ChatTools.Exa             in '..\Web\uMakerAi.ChatTools.Exa.pas',
+  uMakerAi.ChatTools.PerplexitySonar in '..\Web\uMakerAi.ChatTools.PerplexitySonar.pas',
+  uMakerAi.ChatTools.AssemblyAI      in '..\Speech\uMakerAi.ChatTools.AssemblyAI.pas',
+  uMakerAi.ChatTools.Deepgram        in '..\Speech\uMakerAi.ChatTools.Deepgram.pas',
+  uMakerAi.ChatTools.ElevenLabs      in '..\Speech\uMakerAi.ChatTools.ElevenLabs.pas',
+  uMakerAi.ChatTools.Cartesia        in '..\Speech\uMakerAi.ChatTools.Cartesia.pas',
+  uMakerAi.ChatTools.FishAudio       in '..\Speech\uMakerAi.ChatTools.FishAudio.pas',
+  uMakerAi.ChatTools.FalAi          in '..\Image\uMakerAi.ChatTools.FalAi.pas',
+  uMakerAi.ChatTools.StabilityAI    in '..\Image\uMakerAi.ChatTools.StabilityAI.pas',
+  uMakerAi.ChatTools.Ideogram       in '..\Image\uMakerAi.ChatTools.Ideogram.pas',
+  uMakerAi.ChatTools.Replicate      in '..\Image\uMakerAi.ChatTools.Replicate.pas',
+  uMakerAi.ChatTools.LlamaParse     in '..\Pdf\uMakerAi.ChatTools.LlamaParse.pas',
+  uMakerAi.ChatTools.Reducto        in '..\Pdf\uMakerAi.ChatTools.Reducto.pas',
+  uMakerAi.ChatTools.Unstructured   in '..\Pdf\uMakerAi.ChatTools.Unstructured.pas',
+  uMakerAi.ChatTools.MistralOcr     in '..\Pdf\uMakerAi.ChatTools.MistralOcr.pas',
+  uMakerAi.ChatTools.RunwayML       in '..\Video\uMakerAi.ChatTools.RunwayML.pas',
+  uMakerAi.ChatTools.DID            in '..\Video\uMakerAi.ChatTools.DID.pas',
+  uMakerAi.ChatTools.KlingAI        in '..\Video\uMakerAi.ChatTools.KlingAI.pas',
+  uMakerAi.ChatTools.OpenAISpeech   in '..\Speech\uMakerAi.ChatTools.OpenAISpeech.pas',
+  uMakerAi.ChatTools.GeminiSpeech   in '..\Speech\uMakerAi.ChatTools.GeminiSpeech.pas',
+  uMakerAi.ChatTools.ClaudeSpeech   in '..\Speech\uMakerAi.ChatTools.ClaudeSpeech.pas',
+  uMakerAi.ChatTools.GeminiVideo    in '..\Video\uMakerAi.ChatTools.GeminiVideo.pas',
+  uMakerAi.ChatTools.OpenAIVideo    in '..\Video\uMakerAi.ChatTools.OpenAIVideo.pas',
+  uMakerAi.ChatTools.OpenAIVision   in '..\Vision\uMakerAi.ChatTools.OpenAIVision.pas',
+  uMakerAi.ChatTools.GeminiVision   in '..\Vision\uMakerAi.ChatTools.GeminiVision.pas',
+  uMakerAi.ChatTools.ClaudeVision   in '..\Vision\uMakerAi.ChatTools.ClaudeVision.pas';
+
+end.
