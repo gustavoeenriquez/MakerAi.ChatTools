@@ -53,6 +53,7 @@ contains
   uMakerAi.ChatTools.Reducto        in '..\Pdf\uMakerAi.ChatTools.Reducto.pas',
   uMakerAi.ChatTools.Unstructured   in '..\Pdf\uMakerAi.ChatTools.Unstructured.pas',
   uMakerAi.ChatTools.MistralOcr     in '..\Pdf\uMakerAi.ChatTools.MistralOcr.pas',
+  uMakerAi.ChatTools.NativePdf      in '..\Pdf\uMakerAi.ChatTools.NativePdf.pas',
   uMakerAi.ChatTools.RunwayML       in '..\Video\uMakerAi.ChatTools.RunwayML.pas',
   uMakerAi.ChatTools.DID            in '..\Video\uMakerAi.ChatTools.DID.pas',
   uMakerAi.ChatTools.KlingAI        in '..\Video\uMakerAi.ChatTools.KlingAI.pas',

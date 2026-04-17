@@ -43,7 +43,7 @@
     <DCC_S>False</DCC_S>
     <DCC_F>False</DCC_F>
     <DCC_K>False</DCC_K>
-    <DCC_UnitSearchPath>$(DCC_UnitSearchPath);..\Web</DCC_UnitSearchPath>
+    <DCC_UnitSearchPath>$(DCC_UnitSearchPath);..\Web;E:\Copilot\delphi-libraries\pdf\Src\Core;E:\Copilot\delphi-libraries\pdf\Src\Render</DCC_UnitSearchPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Cfg_1)'!=''">
     <DCC_Optimize>False</DCC_Optimize>

@@ -135,15 +135,17 @@ Assign to `TAiChatConnection.VideoTool`.
 These tools implement `IAiPdfTool` — used when `SessionCaps` includes `cap_Pdf`.  
 Assign to `TAiChatConnection.PdfTool`.
 
-| Class | Service | Output | Free Tier | Pricing | Get API Key |
+| Class | Service | Approach | Free Tier | Pricing | Get API Key |
 |---|---|---|---|---|---|
-| `TAiLlamaParseToolPdf` | **LlamaParse** — Cloud PDF parser by LlamaIndex. 3-step async flow: upload → poll → fetch. Returns markdown, text or JSON. | markdown / text / json | 1,000 pages/day | $3/1,000 pages (premium mode) | [cloud.llamaindex.ai](https://cloud.llamaindex.ai/) |
-| `TAiMistralOcrTool` | **Mistral OCR** — `mistral-ocr-latest` endpoint (`/v1/ocr`). Synchronous. PDF sent as base64 data URL. Returns concatenated page markdown. | markdown | Paid only | $1/1,000 pages | [console.mistral.ai](https://console.mistral.ai/api-keys/) |
-| `TAiReductoPdfTool` | **Reducto** — Advanced PDF parsing with table extraction, figure handling and page numbers. Supports both sync and async modes. | markdown | Free tier available | Pay per page | [app.reducto.ai](https://app.reducto.ai/) |
-| `TAiUnstructuredPdfTool` | **Unstructured** — General-purpose document parsing. Uses custom header `unstructured-api-key` (not `Authorization`). Supports multiple strategies. | elements / markdown | 1,000 pages/month | Pay per page | [app.unstructured.io](https://app.unstructured.io/login) |
+| `TAiNativePdfTool` | **Native Delphi** — 100% Delphi. Text extraction (local, 1ms/page) + image rendering via Skia for scanned pages. No external dependencies or API keys. Fastest for text-heavy PDFs. | text-first + vision fallback | ✅ Free | Free (no external API) | N/A |
+| `TAiLlamaParseToolPdf` | **LlamaParse** — Cloud PDF parser by LlamaIndex. 3-step async flow: upload → poll → fetch. Returns markdown, text or JSON. | cloud async | 1,000 pages/day | $3/1,000 pages (premium mode) | [cloud.llamaindex.ai](https://cloud.llamaindex.ai/) |
+| `TAiMistralOcrTool` | **Mistral OCR** — `mistral-ocr-latest` endpoint (`/v1/ocr`). Synchronous. PDF sent as base64 data URL. Returns concatenated page markdown. | cloud sync | Paid only | $1/1,000 pages | [console.mistral.ai](https://console.mistral.ai/api-keys/) |
+| `TAiReductoPdfTool` | **Reducto** — Advanced PDF parsing with table extraction, figure handling and page numbers. Supports both sync and async modes. | cloud | Free tier available | Pay per page | [app.reducto.ai](https://app.reducto.ai/) |
+| `TAiUnstructuredPdfTool` | **Unstructured** — General-purpose document parsing. Uses custom header `unstructured-api-key` (not `Authorization`). Supports multiple strategies. | cloud | 1,000 pages/month | Pay per page | [app.unstructured.io](https://app.unstructured.io/login) |
 
-**Key properties**: `ApiKey`, `ResultType`/`OutputFormat`, `Language`, `PremiumMode`/`ParseMode`.  
-**Env var convention**: `LLAMA_CLOUD_API_KEY`, `MISTRAL_API_KEY`, `REDUCTO_API_KEY`, `UNSTRUCTURED_API_KEY`
+**Key properties**: `ApiKey` (N/A for Native), `ResultType`/`OutputFormat`, `Language`, `PremiumMode`/`ParseMode`.
+- **Native Delphi**: `VisionChat` (optional TAiChat for image pages), `Prompt`, `DPI`, `MinTextLength`
+- **Env var convention**: `LLAMA_CLOUD_API_KEY`, `MISTRAL_API_KEY`, `REDUCTO_API_KEY`, `UNSTRUCTURED_API_KEY`
 
 ---
 
@@ -212,7 +214,48 @@ begin
 end;
 ```
 
-### PDF parsing with gap-analysis bridge
+### PDF parsing with native Delphi (no external API)
+
+```pascal
+uses uMakerAi.Chat.AiConnection, uMakerAi.Chat.Initializations,
+     uMakerAi.ChatTools.NativePdf;
+
+var
+  Conn     : TAiChatConnection;
+  PdfTool  : TAiNativePdfTool;
+  Media    : TAiMediaFile;
+begin
+  PdfTool := TAiNativePdfTool.Create(nil);
+  Media   := TAiMediaFile.Create(nil);
+  Conn    := TAiChatConnection.Create(nil);
+  try
+    // Configure vision chat for analyzing scanned pages (optional)
+    Conn.DriverName := 'Claude';
+    Conn.Model      := 'claude-3-5-sonnet-20241022';
+    Conn.Params.Values['ApiKey']       := '@CLAUDE_API_KEY';
+    Conn.Params.Values['Asynchronous'] := 'False';
+
+    // Configure PDF tool
+    PdfTool.VisionChat := Conn;  // for scanned/image pages
+    PdfTool.DPI        := 150;
+    PdfTool.Prompt     := 'Extract all text and information from this page.';
+
+    Media.LoadFromFile('document.pdf');
+
+    Conn.Params.Values['ModelCaps']   := '[]';
+    Conn.Params.Values['SessionCaps'] := '[cap_Pdf]';
+    Conn.PdfTool := PdfTool;
+
+    // MakerAI detects gap → extracts text (local 1ms) or renders + vision (50-200ms) → completions
+    Writeln(Conn.AddMessageAndRun('Summarize this document', 'user', [Media]));
+  finally
+    Conn.PdfTool := nil;
+    Conn.Free; Media.Free; PdfTool.Free;
+  end;
+end;
+```
+
+### PDF parsing with cloud service (LlamaParse)
 
 ```pascal
 uses uMakerAi.Chat.AiConnection, uMakerAi.Chat.Initializations,
@@ -240,7 +283,7 @@ begin
     Conn.Params.Values['SessionCaps']  := '[cap_Pdf]';
     Conn.PdfTool := LlamaParse;
 
-    // MakerAI detects gap → parses PDF with LlamaParse → injects markdown → completions
+    // MakerAI detects gap → parses PDF with LlamaParse (async poll) → injects markdown → completions
     Writeln(Conn.AddMessageAndRun('Summarize this document', 'user', [Media]));
   finally
     Conn.PdfTool := nil;
@@ -292,7 +335,7 @@ Each service has two demos:
 | `PERPLEXITY_API_KEY` | TAiPerplexitySonarTool |
 | `OPENAI_API_KEY` | TAiOpenAISpeechTool, TAiOpenAIVisionTool, TAiOpenAIVideoTool |
 | `GEMINI_API_KEY` | TAiGeminiSpeechTool, TAiGeminiVisionTool, TAiGeminiVideoTool |
-| `CLAUDE_API_KEY` | TAiClaudeSTTTool, TAiClaudeVisionTool |
+| `CLAUDE_API_KEY` | TAiClaudeSTTTool, TAiClaudeVisionTool, TAiNativePdfTool (optional, for vision analysis) |
 | `ELEVENLABS_API_KEY` | TAiElevenLabsTool |
 | `ASSEMBLYAI_API_KEY` | TAiAssemblyAISTTTool |
 | `DEEPGRAM_API_KEY` | TAiDeepgramSTTTool |
@@ -312,6 +355,10 @@ Each service has two demos:
 
 All tools support the `@VAR_NAME` convention: set `ApiKey := '@TAVILY_API_KEY'` and the
 value is resolved via `GetEnvironmentVariable` at runtime.
+
+**Note:** `TAiNativePdfTool` does not require an API key for text extraction (100% local via Delphi PDF library).
+It optionally uses a `VisionChat` (with its own API key) only for scanned/image pages.
+Set `@CLAUDE_API_KEY`, `@OPENAI_API_KEY` etc. only if you assign a `VisionChat` for page vision analysis.
 
 ---
 
