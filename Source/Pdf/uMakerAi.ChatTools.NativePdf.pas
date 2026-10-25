@@ -121,7 +121,6 @@ var
   Page: TPDFPage;
   Opts: TPDFRenderOptions;
   Renderer: TPDFSkiaRenderer;
-  SkImage: ISkImage;
   PngBytes: TBytes;
   MS: TMemoryStream;
   PixW, PixH: Integer;
@@ -132,8 +131,8 @@ begin
   try
     PixW := Round(Page.Width / 72.0 * FDPI);
     PixH := Round(Page.Height / 72.0 * FDPI);
-    SkImage := Renderer.RenderPageToImage(Page, PixW, PixH);
-    PngBytes := SkImage.EncodeToBytes(TSkEncodedImageFormat.PNG, 100);
+    // delphi-libraries/pdf expone el PNG directo (sin pasar por ISkImage.Encode)
+    PngBytes := Renderer.RenderPageToPng(Page, PixW, PixH);
   finally
     Renderer.Free;
   end;
@@ -226,14 +225,10 @@ begin
 
     LResult := FullText.ToString;
 
-    // Enriquecer prompt del usuario con datos extraídos
-    if Assigned(AskMsg) and (AskMsg.Prompt <> '') then
-      AskMsg.Prompt := AskMsg.Prompt + #10 + 'PDF Data:' + #10 +
-                       StringReplace(LResult, #13#10, '\n', [rfReplaceAll]);
-
+    // El texto queda en Transcription: RunNew (fase 1) lo inyecta en el prompt del
+    // usuario como transcripcion; no se duplica aqui
     aMediaFile.Transcription := LResult;
     aMediaFile.Procesado := True;
-    ResMsg.Content := LResult;
     ResMsg.Prompt := LResult;
     ResMsg.Role := 'assistant';
 
@@ -256,12 +251,10 @@ end;
 procedure TAiNativePdfTool.ExecutePdfAnalysis(aMediaFile: TAiMediaFile;
                                              ResMsg, AskMsg: TAiChatMessage);
 begin
-  if IsAsync then
-    InternalProcess(aMediaFile, ResMsg, AskMsg)
-  else
-    TTask.Run(procedure begin
-      InternalProcess(aMediaFile, ResMsg, AskMsg);
-    end);
+  // Siempre en linea: el puente de fase 1 de RunNew es secuencial (el texto extraido se
+  // inyecta en el prompt justo despues). Antes se lanzaba en un TTask cuando el chat era
+  // sincrono y el modelo recibia el PDF vacio (ReportDataEnd ya despacha por Queue si hace falta).
+  InternalProcess(aMediaFile, ResMsg, AskMsg);
 end;
 
 function TAiNativePdfTool.ExtractText(const APdfPath: string): string;
@@ -279,6 +272,7 @@ end;
 function TAiNativePdfTool.ExtractText(AStream: TStream; const AFileName: string): string;
 var
   LMedia: TAiMediaFile;
+  LMem: TMemoryStream;
   LResMsg, LAskMsg: TAiChatMessage;
 begin
   Result := '';
@@ -291,7 +285,15 @@ begin
   LAskMsg := TAiChatMessage.Create;
 
   try
-    LMedia.LoadFromStream(AFileName, AStream);
+    // TAiMediaFile.LoadFromStream exige un TMemoryStream
+    LMem := TMemoryStream.Create;
+    try
+      LMem.CopyFrom(AStream, 0);
+      LMem.Position := 0;
+      LMedia.LoadFromStream(AFileName, LMem);
+    finally
+      LMem.Free;
+    end;
     LAskMsg.Prompt := '';
 
     InternalProcess(LMedia, LResMsg, LAskMsg);
